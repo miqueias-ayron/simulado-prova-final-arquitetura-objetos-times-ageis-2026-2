@@ -1,0 +1,56 @@
+{
+  "info": {
+    "name": "Simulado Prova Final - Sistema de Projetos",
+    "description": "Testes da API da aula 15.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    { "key": "baseUrl", "value": "http://localhost:8080" },
+    { "key": "token", "value": "" },
+    { "key": "departamentoId", "value": "1" },
+    { "key": "pessoaId", "value": "1" },
+    { "key": "projetoId", "value": "1" }
+  ],
+  "auth": { "type": "bearer", "bearer": [{ "key": "token", "value": "{{token}}", "type": "string" }] },
+  "item": [
+    {
+      "name": "Autenticação",
+      "item": [
+        { "name": "Cadastrar usuário", "request": { "method": "POST", "header": [{ "key": "Content-Type", "value": "application/json" }], "body": { "mode": "raw", "raw": "{\n  \"email\": \"admin@exemplo.com\",\n  \"senha\": \"123456\"\n}", "options": { "raw": { "language": "json" } } }, "url": "{{baseUrl}}/usuarios" } },
+        { "name": "Login", "event": [{ "listen": "test", "script": { "exec": ["const json = pm.response.json();", "pm.collectionVariables.set('token', json.token);"] } }], "request": { "method": "POST", "header": [{ "key": "Content-Type", "value": "application/json" }], "body": { "mode": "raw", "raw": "{\n  \"email\": \"admin@exemplo.com\",\n  \"senha\": \"123456\"\n}", "options": { "raw": { "language": "json" } } }, "url": "{{baseUrl}}/login" } }
+      ]
+    },
+    {
+      "name": "Departamentos",
+      "item": [
+        { "name": "Criar departamento", "request": { "method": "POST", "header": [{ "key": "Content-Type", "value": "application/json" }], "body": { "mode": "raw", "raw": "{\n  \"nome\": \"Tecnologia\"\n}", "options": { "raw": { "language": "json" } } }, "url": "{{baseUrl}}/departamentos" } },
+        { "name": "Listar departamentos", "request": { "method": "GET", "url": "{{baseUrl}}/departamentos" } },
+        { "name": "Buscar departamento", "request": { "method": "GET", "url": "{{baseUrl}}/departamentos/{{departamentoId}}" } },
+        { "name": "Atualizar departamento", "request": { "method": "PUT", "header": [{ "key": "Content-Type", "value": "application/json" }], "body": { "mode": "raw", "raw": "{\n  \"nome\": \"Engenharia\"\n}", "options": { "raw": { "language": "json" } } }, "url": "{{baseUrl}}/departamentos/{{departamentoId}}" } },
+        { "name": "Excluir departamento", "request": { "method": "DELETE", "url": "{{baseUrl}}/departamentos/{{departamentoId}}" } }
+      ]
+    },
+    {
+      "name": "Pessoas",
+      "item": [
+        { "name": "Criar pessoa", "request": { "method": "POST", "header": [{ "key": "Content-Type", "value": "application/json" }], "body": { "mode": "raw", "raw": "{\n  \"nome\": \"Maria Silva\",\n  \"cpf\": \"12345678900\"\n}", "options": { "raw": { "language": "json" } } }, "url": "{{baseUrl}}/pessoas" } },
+        { "name": "Listar pessoas", "request": { "method": "GET", "url": "{{baseUrl}}/pessoas" } },
+        { "name": "Buscar pessoa", "request": { "method": "GET", "url": "{{baseUrl}}/pessoas/{{pessoaId}}" } },
+        { "name": "Atualizar pessoa", "request": { "method": "PUT", "header": [{ "key": "Content-Type", "value": "application/json" }], "body": { "mode": "raw", "raw": "{\n  \"nome\": \"Maria Souza\",\n  \"cpf\": \"12345678900\"\n}", "options": { "raw": { "language": "json" } } }, "url": "{{baseUrl}}/pessoas/{{pessoaId}}" } },
+        { "name": "Adicionar pessoa ao projeto", "request": { "method": "POST", "url": "{{baseUrl}}/pessoas/{{pessoaId}}/projetos/{{projetoId}}" } },
+        { "name": "Remover pessoa do projeto", "request": { "method": "DELETE", "url": "{{baseUrl}}/pessoas/{{pessoaId}}/projetos/{{projetoId}}" } },
+        { "name": "Excluir pessoa", "request": { "method": "DELETE", "url": "{{baseUrl}}/pessoas/{{pessoaId}}" } }
+      ]
+    },
+    {
+      "name": "Projetos",
+      "item": [
+        { "name": "Criar projeto", "request": { "method": "POST", "header": [{ "key": "Content-Type", "value": "application/json" }], "body": { "mode": "raw", "raw": "{\n  \"nome\": \"Sistema de Projetos\",\n  \"descricao\": \"Projeto do simulado da prova final\",\n  \"departamento\": {\n    \"id\": {{departamentoId}}\n  }\n}", "options": { "raw": { "language": "json" } } }, "url": "{{baseUrl}}/projetos" } },
+        { "name": "Listar projetos", "request": { "method": "GET", "url": "{{baseUrl}}/projetos" } },
+        { "name": "Buscar projeto", "request": { "method": "GET", "url": "{{baseUrl}}/projetos/{{projetoId}}" } },
+        { "name": "Atualizar projeto", "request": { "method": "PUT", "header": [{ "key": "Content-Type", "value": "application/json" }], "body": { "mode": "raw", "raw": "{\n  \"nome\": \"Sistema Atualizado\",\n  \"descricao\": \"Descrição atualizada\",\n  \"departamento\": {\n    \"id\": {{departamentoId}}\n  }\n}", "options": { "raw": { "language": "json" } } }, "url": "{{baseUrl}}/projetos/{{projetoId}}" } },
+        { "name": "Excluir projeto", "request": { "method": "DELETE", "url": "{{baseUrl}}/projetos/{{projetoId}}" } }
+      ]
+    }
+  ]
+}
